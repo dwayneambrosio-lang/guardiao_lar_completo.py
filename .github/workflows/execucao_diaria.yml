@@ -1,0 +1,27 @@
+name: Disparo Diario Guardiao da Familia
+
+on:
+  schedule:
+    # 10:04 de Luanda corresponde a 09:04 no horário UTC usado pelo GitHub
+    - cron: '4 9 * * *'
+  workflow_dispatch: # ISTO ATIVA O BOTÃO DE TESTE MANUAL!
+
+jobs:
+  rodar-script:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Baixar o codigo do repositorio
+      uses: actions/checkout@v3
+
+    - name: Configurar o Python no servidor
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Instalar a biblioteca da Groq
+      run: |
+        pip install groq
+
+    - name: Executar o Guardiao do Lar
+      run: python guardiao_lar_completo.py
